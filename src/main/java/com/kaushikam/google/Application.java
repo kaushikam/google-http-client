@@ -8,16 +8,20 @@ import java.io.IOException;
 public class Application {
     public static void main(String[] args) throws Exception {
         RestClient client = new RestClient();
-        RestRequest request = new RestRequest(new ConsumerId("1234567890"));
+        RestRequest request = new RestRequest(new ConsumerId("12345678901"));
         try {
             RestResponse response = client.getRestResponse(request);
         } catch (IOException e) {
             if (e instanceof HttpResponseException) {
+                e.printStackTrace();
+                System.out.println(((HttpResponseException) e).getContent());
                 HttpResponseException ex = (HttpResponseException) e;
                 ApiError error = getApiError(ex.getContent()).getError();
                 switch (error.getErrorCode()) {
                     case 1:
                         throw new ConsumerNotFoundException(error.getMessage());
+                    case 0:
+                        throw new InvalidConsumerIdException(error.getMessage());
                 }
             }
         }
