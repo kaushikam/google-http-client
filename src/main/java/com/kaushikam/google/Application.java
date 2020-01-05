@@ -8,13 +8,12 @@ import java.io.IOException;
 public class Application {
     public static void main(String[] args) throws Exception {
         RestClient client = new RestClient();
-        RestRequest request = new RestRequest(new ConsumerId("12345678901"));
+        RestRequest request = new RestRequest("12345678901");
         try {
             RestResponse response = client.getRestResponse(request);
+            System.out.println(response);
         } catch (IOException e) {
             if (e instanceof HttpResponseException) {
-                e.printStackTrace();
-                System.out.println(((HttpResponseException) e).getContent());
                 HttpResponseException ex = (HttpResponseException) e;
                 ApiError error = getApiError(ex.getContent()).getError();
                 switch (error.getErrorCode()) {

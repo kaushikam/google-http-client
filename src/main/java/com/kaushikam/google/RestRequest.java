@@ -4,11 +4,11 @@ import com.google.api.client.util.Key;
 
 public class RestRequest {
     @Key
-    private ConsumerId consumerId;
+    private String consumerId;
 
     RestRequest() {}
 
-    RestRequest(ConsumerId consumerId) {
+    RestRequest(String consumerId) {
         this.consumerId = consumerId;
     }
 
